@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getTodoById } from "../API/todoService";
+
+function TodoDetails() {
+  const { id } = useParams();
+  const [todo, setTodo] = useState(null);
+
+  useEffect(() => {
+    getTodoById(id).then(setTodo);
+  }, [id]);
+
+  if (!todo) return <p>Loading...</p>;
+
+  return (
+    <div>
+      <h2>Todo Details</h2>
+      <p><strong>ID:</strong> {todo.id}</p>
+      <p><strong>Title:</strong> {todo.title}</p>
+      <p><strong>Status:</strong> {todo.completed ? "✅ Done" : "❌ Pending"}</p>
+    </div>
+  );
+}
+
+export default TodoDetails;
